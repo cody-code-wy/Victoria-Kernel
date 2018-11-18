@@ -35,6 +35,6 @@ void kmain(void){
 }
 
 void delay_random(){
-  int seconds = read_port(0x71);
-  while ( seconds == read_port(0x71) );
+  int seconds = inb(0x71);
+  while ( seconds == inb(0x71) );
 }

@@ -12,19 +12,19 @@ void strobe_lpt0() {
 }
 
 void set_lpt0_control(unsigned short control){
-  write_port(LPT0 + 2, control);
+  outb(LPT0 + 2, control);
 }
 
 void write_lpt0(char a){
   while (is_lpt0_busy() == 0);
-  write_port(LPT0, a);
+  outb(LPT0, a);
   strobe_lpt0();
 }
 
 int is_lpt0_busy() {
-  return read_port(LPT0 + 1) & 0x80;
+  return inb(LPT0 + 1) & 0x80;
 }
 
 unsigned short get_lpt0_control(){
-  return read_port(LPT0 + 2);
+  return inb(LPT0 + 2);
 }

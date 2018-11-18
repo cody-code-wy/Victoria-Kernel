@@ -8,8 +8,8 @@ section .text
     dd - (0x1BADB002 + 0x00) ;checksum m+f+c should be zero
 
 global start
-global read_port
-global write_port
+global inb
+global outb
 extern kmain
 
 start:
@@ -18,12 +18,12 @@ start:
   call kmain
   hlt                   ;halt
 
-read_port:
+inb:
   mov edx, [esp + 4]    ;set port
   in al, dx             ;read port
   ret
 
-write_port:
+outb:
   mov edx, [esp + 4]    ;set port
   mov al, [esp + 4 + 4]            ;write to portO
   out dx, al
