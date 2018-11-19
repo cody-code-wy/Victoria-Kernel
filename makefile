@@ -20,9 +20,8 @@ install:
 	echo Nothing to install
 .PHONY: install
 
-kernel:
-	$(AS) $(ASFLAGS) *.asm
-	$(CC) $(CFLAGS) $(LDFLAGS) -o kernel *.c *.o -lgcc
+kernel: base.o kernel.o com0.o lpt0.o
+	$(CC) $(CFLAGS) $(LDFLAGS) -o kernel *.o -lgcc
 
 victoria.iso: kernel
 	mkdir -p isodir/boot/grub
