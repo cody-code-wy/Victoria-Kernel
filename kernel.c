@@ -6,6 +6,14 @@
 #include "lpt0.h"
 #include "com0.h"
 
+#if defined(__linux__)
+#error "You are compiling a kernel to target \"linux\", this will most certainly not work"
+#endif
+
+#if !defined(__i386__)
+#error "kernel.c is designed to be compiled for ix86-elf; this will not work"
+#endif
+
 void kmain(void){
   const char *str = "Test Kernel";
   char *vidptr = (char*)0xb8000; //video memory begins here
