@@ -1,13 +1,17 @@
 CC=clang
-CFLAGS=-O2 -ffreestanding -fno-builtin -nostdlib -nostdinc -Wall -Wextra -march=i686 --target=i686-pc-none-elf
+CFLAGS=-O2 -ffreestanding -fno-builtin -nostdlib -Wall -Wextra -march=i686 --target=i686-pc-none-elf
+
+# reference flags for using i686_elf_gcc if clang is not available
+# CC=i686_elf_gcc
+# CFLAGS=-O2 -ffreestanding -fno-builtin -nostdlib -Wall -Wextra -march=i686
 
 CXX=clang++
-CXXFLAGS=-O2 -ffreestanding -fno-builtin -nostdlib -nostdinc -nostdinc++ -Wall -Wextra -march=i686 --target=i686-pc-none-elf
+CXXFLAGS=-O2 -ffreestanding -fno-builtin -nostdlib -fno-exceptions -Wall -Wextra -march=i686 --target=i686-pc-none-elf
 
 AS=nasm
 ASFLAGS=-f elf
 
-LDFLAGS=-T link.ld
+LDFLAGS=-T link.ld -nostdlib
 
 all: kernel victoria.iso
 .PHONY: all
@@ -18,7 +22,7 @@ install:
 
 kernel:
 	$(AS) $(ASFLAGS) *.asm
-	$(CC) $(CFLAGS) $(LDFLAGS) -o kernel *.c *.o
+	$(CC) $(CFLAGS) $(LDFLAGS) -o kernel *.c *.o -lgcc
 
 victoria.iso: kernel
 	mkdir -p isodir/boot/grub
