@@ -16,7 +16,11 @@ start:
   cli                   ;block interrupts
   mov esp, stack_space  ;set stack pointer
   call kmain
+  cli
+.hang:
   hlt                   ;halt
+  jmp .hang
+
 
 inb:
   mov edx, [esp + 4]    ;set port
