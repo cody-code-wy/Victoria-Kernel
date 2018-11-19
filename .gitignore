@@ -1,4 +1,6 @@
 *.o
+*.d
 kernel
 victoria.iso
+victoria.tar
 isodir
