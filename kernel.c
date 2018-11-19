@@ -34,7 +34,7 @@ void kmain(void){
 
   while(str[j] != '\0'){
     write_com0(str[j]);
-    write_lpt0(str[j]);
+    /* write_lpt0(str[j]); */
     vidptr[i] = str[j];
     ++j;
     i = i + 2;
