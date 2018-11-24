@@ -3,6 +3,7 @@
  */
 
 #include "kernel.h"
+#include <stdint.h>
 #include "lpt0.h"
 #include "com0.h"
 
@@ -20,7 +21,7 @@ void kmain(void){
   unsigned int i = 0;
   unsigned int j = 0;
 
-  init_com0();
+  com0_init();
 
   while(j < 80 * 25 * 2){
     /* blnk char */
@@ -32,8 +33,11 @@ void kmain(void){
 
   j = 0;
 
+  com0_write(str);
+  com0_write("Write Test");
+
   while(str[j] != '\0'){
-    write_com0(str[j]);
+    com0_write_char(str[j]);
     /* write_lpt0(str[j]); */
     vidptr[i] = str[j];
     ++j;

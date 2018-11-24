@@ -3,8 +3,9 @@
  */
 
 #include "com0.h"
+#include <stdint.h>
 
-void init_com0() {
+void com0_init() {
   outb(COM0 + 1, 0x00); /// Disable all interrupts
   outb(COM0 + 3, 0x80); /// Enable DLAB (set baud rate divisor)
   outb(COM0 + 0, 0x03); /// set divisor to 3 (lo byte) 38400 baud
@@ -14,9 +15,14 @@ void init_com0() {
   outb(COM0 + 4, 0x0B); /// IRQs enbaled, RTS/BSR set
 }
 
-void write_com0(char a){
+void com0_write_char(char a){
   while (com0_is_transmit_empty() == 0);
   outb(COM0,a);
+}
+
+void com0_write(const char* str){
+  for(uint16_t i = 0; str[i] != '\0'; i++)
+    com0_write_char(str[i]);
 }
 
 
