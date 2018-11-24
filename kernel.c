@@ -4,6 +4,7 @@
 
 #include "kernel.h"
 #include <stdint.h>
+#include "stdlib.h"
 #include "lpt0.h"
 #include "com0.h"
 
@@ -18,32 +19,25 @@
 void kmain(void){
   const char *str = "Test Kernel";
   char *vidptr = (char*)0xb8000; //video memory begins here
-  unsigned int i = 0;
-  unsigned int j = 0;
+  uint64_t i = 0;
+  uint64_t j = 0;
 
   com0_init();
 
-  while(j < 80 * 25 * 2){
-    /* blnk char */
-    vidptr[j] = ' ';
-    /* attribute-bye - light grey on black screen */
-    vidptr[j+1] = 0x2a;
-    j = j + 2;
-  }
-
-  j = 0;
-
-  com0_write(str);
-  com0_write("Write Test");
-
-  while(str[j] != '\0'){
-    com0_write_char(str[j]);
-    /* write_lpt0(str[j]); */
-    vidptr[i] = str[j];
-    ++j;
-    i = i + 2;
-  }
-
+  //sanity check
+  com0_write("TESTING\n\r");
+  com0_write("TEST:COM0_write:writetestpass:writetestpass\n\r");
+  //itoa
+  com0_write("TEST:itoa base 10:8160543001:");
+  com0_write(itoa(8160543001,"LONGENOUGHBUFFER",10));
+  com0_write("\n\rTEST:itoa base 10:-8160543001:");
+  com0_write(itoa(-8160543001,"LONGENOUGHBUFFER",10));
+  com0_write("\n\rTEST:itoa base 16:DEADBEEF:");
+  com0_write(itoa(0xdeadbeef,"LONGENOUGHBUFFER",16));
+  com0_write("\n\rTEST:itoa base 2:11111000011010010111100110101011:");
+  com0_write(itoa(0xF86979AB,"LONGENOUGHBUFFERFORBINARYTESTXXXXXXXX", 2));
+  com0_write("\n\rTEST:ita base 36:PASS243:");
+  com0_write(itoa(55072558515,"LONGENOUGBUFFER",36));
 }
 
 void delay_random(){
