@@ -17,10 +17,9 @@
 #endif
 
 void kmain(void){
-  const char *str = "Test Kernel";
-  char *vidptr = (char*)0xb8000; //video memory begins here
-  uint64_t i = 0;
-  uint64_t j = 0;
+
+  for(int8_t i = 0; i < 9; i++)
+    write_lpt0("Test LPT0"[i]);
 
   com0_init();
 

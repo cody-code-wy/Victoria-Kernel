@@ -7,7 +7,6 @@
 void strobe_lpt0() {
   unsigned short lcontrol = get_lpt0_control();
   set_lpt0_control(lcontrol | 1);
-  delay_random();
   set_lpt0_control(lcontrol & 0xfe);
 }
 
