@@ -1,5 +1,9 @@
 CC=clang
 CFLAGS=-O2 -ffreestanding -fno-builtin -nostdlib -Wall -Wextra -march=i686 --target=i686-pc-none-elf
+CTESTFLAGS=-DTEST -DDEBUG
+
+test: CFLAGS+=$(CTESTFLAGS)
+test_iso: CFLAGS+=$(CTESTFLAGS)
 
 # reference flags for using i686_elf_gcc if clang is not available
 # CC=i686_elf_gcc
@@ -7,6 +11,10 @@ CFLAGS=-O2 -ffreestanding -fno-builtin -nostdlib -Wall -Wextra -march=i686 --tar
 
 CXX=clang++
 CXXFLAGS=-O2 -ffreestanding -fno-builtin -nostdlib -fno-exceptions -fno-rtti -Wall -Wextra -march=i686 --target=i686-pc-none-elf
+CXXTESTFLAGS=-DTEST -DDEBUG
+
+test: CXXFLAGS+=$(CXXTESTFLAGS)
+test_iso: CXXFLAGS+=$(CXXTESTFLAGS)
 
 AS=nasm
 ASFLAGS=-f elf
